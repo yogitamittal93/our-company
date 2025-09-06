@@ -1,16 +1,15 @@
-// src/app/categories/[id]/page.js
-import { supabase } from "../../../lib/supabaseClient";
+import { supabase } from "@/lib/supabaseClient";
 
-export const revalidate = 0; // optional: always fetch fresh
+export const revalidate = 0; // always fetch fresh
 
 export default async function CategoryPage({ params }) {
-  const { id } = params; // ✅ category slug (e.g. "gp-sheets")
+  const { url } = await params; // ✅ category slug (e.g. "gp-sheets")
 
   // fetch products where category_url matches slug
   const { data: categoryProducts, error } = await supabase
     .from("products")
     .select("*")
-    .eq("category_url", id);
+    .eq("category_url", url);
 
   if (error) {
     console.error("Supabase error:", error.message);
@@ -23,15 +22,15 @@ export default async function CategoryPage({ params }) {
 
   return (
     <main className="max-w-6xl mx-auto py-12 px-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        {id.replace(/-/g, " ")}
+      <h1 className="text-3xl font-bold mb-6 text-center text-blue-800">
+        {url.replace(/-/g, " ")}
       </h1>
 
       <ul className="grid md:grid-cols-3 gap-6">
         {categoryProducts.map((product) => (
           <li
             key={product.url}
-            className="border rounded-lg shadow p-4 hover:shadow-lg transition"
+            className="border-blue-400 rounded-lg shadow p-4 hover:shadow-lg transition"
           >
             <a href={`/products/${product.url}`}>
               <img
@@ -39,9 +38,9 @@ export default async function CategoryPage({ params }) {
                 alt={product.name}
                 className="w-full h-40 object-cover mb-2 rounded"
               />
-              <h3 className="font-bold text-xl mb-1">{product.name}</h3>
+              <h3 className="font-bold text-xl mb-1  text-blue-700">{product.name}</h3>
             </a>
-            <p className="mb-2">{product.description}</p>
+            <p className="mb-2 text-blue-600">{product.description}</p>
             <div className="flex justify-between text-sm">
               <span className="font-semibold">{product.brand}</span>
               {product.ISI && (
@@ -56,4 +55,3 @@ export default async function CategoryPage({ params }) {
     </main>
   );
 }
-
