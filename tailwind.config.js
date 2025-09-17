@@ -11,6 +11,7 @@ module.exports = {
         "brand-steel": "#2E3A46",
         "brand-blue": "#1E40AF",
         "brand-red": "#B91C1C",
+        "main": "#1c252e",
       },
     },
   },
