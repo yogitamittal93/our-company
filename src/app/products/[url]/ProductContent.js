@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import RecentlyViewed from "@/app/components/RecentlyViewed";
-import { useRef } from "react";
-
 
 export default function ProductContent({ product, related, whatsappLink }) {
   const images = product.image
@@ -12,17 +10,23 @@ export default function ProductContent({ product, related, whatsappLink }) {
 
   const breadcrumbs = [
     { label: "Home", href: "/" },
-    product.categories ? { label: product.categories.name, href: `/categories/${product.categories.url}` } : null,
+    product.categories
+      ? { label: product.categories.name, href: `/categories/${product.categories.url}` }
+      : null,
     { label: product.name, href: `/products/${product.url}` },
   ].filter(Boolean);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const nextImage = () =>
     setCurrentIndex((prev) => (prev + 1) % images.length);
 
   const prevImage = () =>
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const scrollRef = useRef(null);
 
@@ -34,8 +38,9 @@ export default function ProductContent({ product, related, whatsappLink }) {
       });
     }
   };
+
   return (
-    <main className="max-w-7xl mx-auto py-6 px-4 bg-gray-100 min-h-screen">
+    <main className="max-w-7xl mx-auto py-6 px-4 bg-gray-100 min-h-screen relative">
       {/* Breadcrumbs */}
       <div className="text-sm text-gray-600 mb-4">
         {breadcrumbs.map((crumb, index) => (
@@ -51,7 +56,7 @@ export default function ProductContent({ product, related, whatsappLink }) {
       {/* Main Content */}
       <div className="bg-gray-50 rounded-2xl shadow-lg p-6 lg:flex lg:gap-8">
         {/* Image Section */}
-        <div className="lg:w-1/2 relative h-[400px] sm:h-[500px] rounded-xl overflow-hidden shadow-md">
+        <div className="lg:w-1/2 relative h-[400px] sm:h-[500px] rounded-xl overflow-hidden shadow-md cursor-pointer" onClick={openModal}>
           <img
             src={images[currentIndex]}
             alt={product.name}
@@ -60,13 +65,13 @@ export default function ProductContent({ product, related, whatsappLink }) {
           {images.length > 1 && (
             <>
               <button
-                onClick={prevImage}
+                onClick={(e) => { e.stopPropagation(); prevImage(); }}
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white px-3 py-1 rounded-full hover:bg-black/70"
               >
                 ‹
               </button>
               <button
-                onClick={nextImage}
+                onClick={(e) => { e.stopPropagation(); nextImage(); }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white px-3 py-1 rounded-full hover:bg-black/70"
               >
                 ›
@@ -84,7 +89,6 @@ export default function ProductContent({ product, related, whatsappLink }) {
             <div>
               <span className="font-semibold">Brand:</span> {product.brand || "Not specified"}
             </div>
-
             {product.brands && (
               <div>
                 <a
@@ -95,7 +99,6 @@ export default function ProductContent({ product, related, whatsappLink }) {
                 </a>
               </div>
             )}
-
             {product.ISI && (
               <div className="bg-green-100 text-green-800 px-2 py-1 rounded w-fit text-sm font-medium">
                 ✅ ISI Certified
@@ -123,14 +126,12 @@ export default function ProductContent({ product, related, whatsappLink }) {
       </div>
 
       {/* Related Products */}
-      {/* Related Products */}
       {related.length > 0 && (
         <section className="mt-12 relative">
           <h2 className="text-2xl font-bold mb-4 text-gray-800">
             More from this brand
           </h2>
           <div className="relative">
-            {/* Left Button */}
             <button
               onClick={() => scroll("left")}
               className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-full p-1 z-10"
@@ -138,7 +139,6 @@ export default function ProductContent({ product, related, whatsappLink }) {
               ‹
             </button>
 
-            {/* Scroll Container */}
             <div
               ref={scrollRef}
               className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-4"
@@ -150,11 +150,7 @@ export default function ProductContent({ product, related, whatsappLink }) {
                   className="min-w-[200px] border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition bg-white"
                 >
                   <img
-                    src={
-                      rp.image
-                        ? rp.image.split(",")[0].trim()
-                        : `/images/${rp.id}.webp`
-                    }
+                    src={rp.image ? rp.image.split(",")[0].trim() : `/images/${rp.id}.webp`}
                     alt={rp.name}
                     className="w-full h-32 object-cover rounded-t-lg"
                   />
@@ -167,7 +163,6 @@ export default function ProductContent({ product, related, whatsappLink }) {
               ))}
             </div>
 
-            {/* Right Button */}
             <button
               onClick={() => scroll("right")}
               className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-full p-1 z-10"
@@ -178,8 +173,7 @@ export default function ProductContent({ product, related, whatsappLink }) {
         </section>
       )}
 
-
-      {/* Recently Viewed Section */}
+      {/* Recently Viewed */}
       <RecentlyViewed
         current={{
           id: product.id,
@@ -188,6 +182,29 @@ export default function ProductContent({ product, related, whatsappLink }) {
           image: product.image ? product.image.split(",")[0].trim() : `/images/${product.id}.webp`,
         }}
       />
+
+      {/* Image Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+          onClick={closeModal}
+        >
+          <div className="relative w-full h-full max-w-5xl p-4">
+            <img
+              src={images[currentIndex]}
+              alt={product.name}
+              className="w-full h-full object-contain mx-auto"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 bg-white text-black rounded-full p-2 hover:bg-gray-200 transition"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

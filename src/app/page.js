@@ -2,6 +2,7 @@ import { supabase } from "../lib/supabaseClient.js";
 import Image from 'next/image';
 import ProductImageSlider from "./components/productImageSlider.js";
 import BrandBar from "./components/BrandBar"; 
+import ReviewSlider from "./components/ReviewSlider";
 
 export const metadata = {
   title: "Lakshmi Iron Company | TATA DURASHINE & BUILDING MATERIALS Supplier in Chandigarh",
@@ -64,14 +65,51 @@ if (brandsError) {
   </div>
 </section>
  <BrandBar brands={brands || []} />
-<section className="text-left mb-12 max-w-6xl mx-auto  ">
+<section className="text-left mb-12 max-w-6xl mx-auto mt-6 ">
   <h1 className="text-3xl font-bold mb-4 text-black-800">
     Trusted Wholesale Supplier of premium quality Iron products in Chandigarh
   </h1>
 
-  <p className="text-lg mb-6 text-gray-700 max-w-6xl mx-auto">
-    Since 1993, delivering premium products such as Color coated sheets of reputed brands like TATA & Jindal, Galvanized corrugated sheets, GP sheets, CR sheets, Chequered sheets, ACP Sheets by ALUCOM, MS ANGLE, Channel, MS PIPE of brands like APOLLO, Bhushan, Jyoti, Square bar, MS Round, MS Flat, barbed wire, concertina wire, weldmesh zali, self drilling screws by HP etc. We possess huge variety of Fibre as well as polycarbonate sheets at wholesale prices.
-  </p>
+ <div className="max-w-6xl mx-auto text-gray-700 text-lg mb-6">
+  <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 list-none">
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      Color coated sheets of reputed brands like  TATA & Jindal 
+    </li>
+    
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      ACP Sheets by ALUCOM
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      MS ANGLE, Channel, PIPE of brands like APOLLO, Bhushan, Jyoti
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      Square bar, MS Round, MS Flat
+    </li>
+    
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      Self drilling screws by HP etc
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      Barbed wire, concertina wire, weldmesh zali
+    </li>
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      Galvanized corrugated sheets, GP sheets, CR sheets, Chequered sheets
+    </li>
+    
+    <li className="flex items-start gap-2">
+      <span className="text-green-600">✔</span>
+      Huge variety of Fibre as well as polycarbonate sheets<br/>at wholesale prices
+    </li>
+  </ul>
+</div>
+
 
   <div className="flex gap-4 justify-center">
     <a
@@ -125,7 +163,7 @@ if (brandsError) {
     )}
   </ul>
 </section>
-
+   <ReviewSlider />
 
       {/* Featured Products Section */}
       <section className="mb-12 max-w-6xl mx-auto ">
@@ -149,7 +187,12 @@ if (brandsError) {
                   />
                   <h3 className="font-bold text-xl mb-1 text-black-600">{product.name}</h3>
                 </a>
-                <p className="mb-2">{product.description}</p>
+                <p className="mb-2">{product.description
+                      ? (product.description.length > 80
+                          ? product.description.slice(0, 80) + "..."
+                          : product.description)
+                      : "No description available."}</p>
+                
                 <div className="flex justify-between text-sm">
                   <span className="font-semibold">{product.brand}</span>
                   {product.ISI && (

@@ -1,4 +1,4 @@
-"use client"; // <-- add at top of page.js
+"use client";
 
 import { useState } from "react";
 
@@ -34,54 +34,67 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="max-w-5xl mx-auto px-6 py-12">
-      {/* ... your existing Contact Info ... */}
+    <main className="max-w-7xl mx-auto px-4 py-12 text-[#1c252e] min-h-screen">
+      <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Address & Map Section */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Our Address</h2>
+          <p>Shop No. 223, Sector - 29D,<br />
+          Iron Market, Chandigarh</p>
+          <p>Phone: +91 7717686970</p>
+          <p>Email: gaurav.mittal.april20@gmail.com</p>
 
-      {/* Contact Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-2xl shadow space-y-4"
-      >
-        <h2 className="text-2xl font-semibold text-blue-700 mb-4">
-          Send Us a Message
-        </h2>
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Your Name"
-          required
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="you@example.com"
-          required
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <textarea
-          name="message"
-          value={form.message}
-          onChange={handleChange}
-          placeholder="Your message..."
-          rows="4"
-          required
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        ></textarea>
+          <div className="mt-6 h-[300px]">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.332385222566!2d76.78229897525341!3d30.709054874595694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed1d8bc09b11%3A0x8c4654b9a9d3057c!2sLAKSHMI%20IRON%20COMPANY!5e0!3m2!1sen!2sin!4v1758178034783!5m2!1sen!2sin"  width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy" ></iframe>
+          </div>
+        </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition"
-        >
-          Send Message
-        </button>
+        {/* Contact Form Section */}
+        <form onSubmit={handleSubmit} className="space-y-4 bg-[#1c252e] text-white p-3">
+          <h2 className="text-xl font-semibold mb-4">Send Us a Message</h2>
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Your Name"
+            required
+            className="w-full border border-gray-600 bg-[#1c252e] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8d8053]"
+          />
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            placeholder="you@example.com"
+            required
+            className="w-full border border-gray-600 bg-[#1c252e] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8d8053]"
+          />
+          <textarea
+            name="message"
+            value={form.message}
+            onChange={handleChange}
+            placeholder="Your message..."
+            rows="4"
+            required
+            className="w-full border border-gray-600 bg-[#1c252e] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8d8053]"
+          ></textarea>
 
-        {status && <p className="mt-3 text-center text-sm">{status}</p>}
-      </form>
+          <button
+            type="submit"
+            className="w-full bg-[#8d8053] text-white py-3 font-semibold hover:bg-[#7a6f47] transition"
+          >
+            Send Message
+          </button>
+
+          {status && <p className="text-sm text-center">{status}</p>}
+        </form>
+      </div>
     </main>
   );
 }
