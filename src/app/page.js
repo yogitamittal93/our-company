@@ -66,7 +66,7 @@ export default async function HomePage() {
       <SEO
         title="Lakshmi Iron Company | TATA DURASHINE Supplier in Chandigarh"
         description="Authorised dealer & supplier of TATA DURASHINE, Jindal color coated, ACP Sheets, Apollo pipes, Ankur asbestos, fibre, polycarbonate in Loha market, Chandigarh"
-        url="https://yourdomain.com"
+        url="https://lakshmiironcompany.in"
         image="/images/bannerHome.webp"
         breadcrumbs={[{ label: "Home", href: "/" }]}
       />
@@ -76,8 +76,8 @@ export default async function HomePage() {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Lakshmi Iron Company",
-          url: "https://yourdomain.com",
-          logo: "https://yourdomain.com/images/bannerHome.webp",
+          url: "https://lakshmiironcompany.in",
+          logo: "https://lakshmiironcompany.in/images/bannerHome.webp",
           sameAs: [
             "https://www.facebook.com/yourpage",
             "https://www.instagram.com/yourpage"
@@ -101,7 +101,7 @@ export default async function HomePage() {
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://yourdomain.com/"
+              item: "https://lakshmiironcompany.in/"
             }
           ]
         })}

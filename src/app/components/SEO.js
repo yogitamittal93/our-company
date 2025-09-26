@@ -8,7 +8,7 @@ export default function SEO({
   siteName = "Lakshmi Iron Company",
   organization = {
     name: "Lakshmi Iron Company",
-    url: "https://yourdomain.com",
+    url: "https://lakshmiironcompany.in",
     logo: "/images/logo2.png",
     telephone: "+917973241912",
     sameAs: [

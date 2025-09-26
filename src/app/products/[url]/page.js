@@ -66,7 +66,7 @@ export default async function ProductPage({ params }) {
     category: product.categories?.name || "Products",
     offers: product.price && {
       "@type": "Offer",
-      url: `https://yourdomain.com/products/${product.url}`,
+      url: `https://lakshmiironcompany.in/products/${product.url}`,
       price: product.price,
       priceCurrency: product.currency || "INR",
       availability: "https://schema.org/InStock",
@@ -77,11 +77,11 @@ export default async function ProductPage({ params }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://yourdomain.com/" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://lakshmiironcompany.in/" },
       ...(product.categories
-        ? [{ "@type": "ListItem", position: 2, name: product.categories.name, item: `https://yourdomain.com/categories/${product.categories.url}` }]
+        ? [{ "@type": "ListItem", position: 2, name: product.categories.name, item: `https://lakshmiironcompany.in/categories/${product.categories.url}` }]
         : []),
-      { "@type": "ListItem", position: product.categories ? 3 : 2, name: product.name, item: `https://yourdomain.com/products/${product.url}` },
+      { "@type": "ListItem", position: product.categories ? 3 : 2, name: product.name, item: `https://lakshmiironcompany.in/products/${product.url}` },
     ],
   };
 

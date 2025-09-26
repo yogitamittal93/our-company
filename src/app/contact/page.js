@@ -39,8 +39,8 @@ export default function ContactPage() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Lakshmi Iron Company",
-    url: "https://yourdomain.com",
-    logo: "https://yourdomain.com/images/logo.png",
+    url: "https://lakshmiironcompany.in",
+    logo: "https://lakshmiironcompany.in/images/logo.png",
     contactPoint: {
       "@type": "ContactPoint",
       telephone: "+91 7717686970",
