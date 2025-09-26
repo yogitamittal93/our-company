@@ -1,12 +1,11 @@
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
-import ProductContent from "./ProductContent"; // Import client component
-import RecentlyViewed from "@/app/components/RecentlyViewed";
+import ProductContent from "./ProductContent"; // client component
+import Script from "next/script";
 
 export const revalidate = 0; // always fresh
-
 export async function generateMetadata({ params }) {
-  const { url } = params;
+  const { url } = await params;
   const { data: product } = await supabase
     .from("products")
     .select("name, description")
@@ -36,32 +35,66 @@ export default async function ProductPage({ params }) {
       categories ( id, name, url ),
       brands ( id, name, url )
     `)
-    .eq("url", url)
-    .single();
+    .ilike("url", url)
+    .maybeSingle();
 
-  if (error || !product) return notFound();
+  if (!product || error) return notFound();
 
- let related = [];
+  let related = [];
   if (product.brand_id) {
     const { data } = await supabase
       .from("products")
       .select("id, name, url, image")
-      .eq("brand_id", product.brand_id)  // single brand id, so use eq
-      .neq("id", product.id)             // exclude current product
+      .eq("brand_id", product.brand_id)
+      .neq("id", product.id)
       .limit(10);
-
     related = data || [];
   }
 
-
-
   const whatsappLink = `https://wa.me/917717686970?text=Hello,%20I%20want%20to%20order%20${encodeURIComponent(product.name)}`;
 
+  const imageUrl = product.image ? product.image.split(",")[0].trim() : `/images/${product.id}.webp`;
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    image: imageUrl,
+    sku: product.id,
+    brand: { "@type": "Brand", name: product.brand },
+    category: product.categories?.name || "Products",
+    offers: product.price && {
+      "@type": "Offer",
+      url: `https://yourdomain.com/products/${product.url}`,
+      price: product.price,
+      priceCurrency: product.currency || "INR",
+      availability: "https://schema.org/InStock",
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://yourdomain.com/" },
+      ...(product.categories
+        ? [{ "@type": "ListItem", position: 2, name: product.categories.name, item: `https://yourdomain.com/categories/${product.categories.url}` }]
+        : []),
+      { "@type": "ListItem", position: product.categories ? 3 : 2, name: product.name, item: `https://yourdomain.com/products/${product.url}` },
+    ],
+  };
+
   return (
-    <ProductContent
-      product={product}
-      related={related}
-      whatsappLink={whatsappLink}
-    />
+    <>
+      <ProductContent product={product} related={related} whatsappLink={whatsappLink} />
+
+      <Script
+        id="product-breadcrumb-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([productSchema, breadcrumbSchema]) }}
+      />
+    </>
   );
 }

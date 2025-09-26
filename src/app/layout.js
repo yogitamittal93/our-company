@@ -26,15 +26,16 @@ export const metadata = {
   manifest: "/site.webmanifest",
 };
 
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen bg-brand-dark text-white">
         <Header />
 
-        {/* Main content */}
-        <main className="flex-grow bg-gray-100 pb-6">{children}</main>
+        {/* Main content wrapper */}
+        <main className="flex-grow bg-gray-100 text-black pb-6">
+          {children}
+        </main>
 
         <Footer />
       </body>

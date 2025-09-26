@@ -1,3 +1,4 @@
+import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-[#1c252e] text-gray-300 py-2">
@@ -5,7 +6,13 @@ export default function Footer() {
         
         {/* Logo Section */}
         <div className="justify-center md:justify-start">
-          <img src="/images/logo2.png" alt="Lakshmi Iron Company Logo" className="h-7 w-auto" />
+          <Image
+            src="/images/logo2.png"
+            alt="Lakshmi Iron Company Logo"
+            width={140}
+            height={40}
+            className="h-7 w-auto"
+          />
           <p className="mt-2 text-left text-sm text-gray-500"> © {new Date().getFullYear()} Lakshmi Iron Company. All rights reserved. </p>
        
         
