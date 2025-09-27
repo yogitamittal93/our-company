@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabaseClient.js";
 import Image from "next/image";
-import ProductImageSlider from "./components/productImageSlider";
+import ProductImageSlider from "@/components/productImageSlider";
 import BrandBar from "./components/BrandBar"; 
 import ReviewSlider from "./components/ReviewSlider";
 import SEO from "@/app/components/SEO";
