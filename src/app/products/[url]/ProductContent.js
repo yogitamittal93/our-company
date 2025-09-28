@@ -37,6 +37,24 @@ export default function ProductContent({ product, related, whatsappLink }) {
     }
   };
 
+  // 👉 Swipe logic
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+    if (touchStartX.current - touchEndX.current > 50) {
+      nextImage(); // swipe left
+    }
+    if (touchEndX.current - touchStartX.current > 50) {
+      prevImage(); // swipe right
+    }
+  };
+
   return (
     <main className="max-w-7xl mx-auto py-6 px-4 bg-gray-100 min-h-screen relative">
       {/* Breadcrumbs */}
@@ -57,6 +75,8 @@ export default function ProductContent({ product, related, whatsappLink }) {
         <div
           className="lg:w-1/2 relative h-[400px] sm:h-[500px] overflow-hidden shadow-md cursor-pointer"
           onClick={() => setIsModalOpen(true)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <Image
             key={currentIndex}
@@ -65,10 +85,10 @@ export default function ProductContent({ product, related, whatsappLink }) {
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
-            priority={currentIndex === 0} 
-            quality={70} 
-            placeholder="blur" 
-            blurDataURL="/images/products/placeholder.png" 
+            priority={currentIndex === 0}
+            quality={70}
+            placeholder="blur"
+            blurDataURL="/images/products/placeholder.png"
           />
 
           {images.length > 1 && (
@@ -98,6 +118,7 @@ export default function ProductContent({ product, related, whatsappLink }) {
         {/* Product Info */}
         <div className="lg:w-1/2 mt-6 lg:mt-0">
           <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
+
           {product.description && (
             <p className="mt-4 text-gray-700">{product.description}</p>
           )}
@@ -107,6 +128,14 @@ export default function ProductContent({ product, related, whatsappLink }) {
               <span className="font-semibold">Brand:</span>{" "}
               {product.brand || "Not specified"}
             </div>
+
+            {product.price && (
+              <div className="text-gray-700 space-y-2">
+                <span className="font-semibold">Price:</span>{" "}
+                {product.price}
+              </div>
+            )}
+
             {product.brands && (
               <div>
                 <a
@@ -117,12 +146,28 @@ export default function ProductContent({ product, related, whatsappLink }) {
                 </a>
               </div>
             )}
+
             {product.ISI && (
               <div className="bg-green-100 text-green-800 px-2 py-1 rounded w-fit text-sm font-medium">
                 ✅ ISI Certified
               </div>
             )}
           </div>
+
+          {/* Product Details from JSON column */}
+          {product.details && (
+            <div className="mt-4">
+              <h2 className="font-semibold text-gray-800">Specifications:</h2>
+              <ul className="mt-2 space-y-1 text-sm text-gray-600 list-disc list-inside">
+                {Object.entries(product.details).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="capitalize font-medium">{key}:</span>{" "}
+                    {value}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="mt-6 flex gap-4">
             <a
@@ -217,14 +262,16 @@ export default function ProductContent({ product, related, whatsappLink }) {
           className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
           onClick={() => setIsModalOpen(false)}
         >
-          <div className="relative w-full h-full max-w-5xl p-4">
+          <div
+            className="relative w-full h-full max-w-5xl p-4 flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Image
               src={images[currentIndex]}
               alt={product.name}
               fill
               sizes="90vw"
               className="object-contain mx-auto"
-              onClick={(e) => e.stopPropagation()}
             />
             <button
               onClick={() => setIsModalOpen(false)}
@@ -232,6 +279,24 @@ export default function ProductContent({ product, related, whatsappLink }) {
             >
               ✕
             </button>
+
+            {/* Modal Arrows */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 text-white px-3 py-2 rounded hover:bg-black/80"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 text-white px-3 py-2 rounded hover:bg-black/80"
+                >
+                  ›
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

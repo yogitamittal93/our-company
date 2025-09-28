@@ -32,14 +32,16 @@ export default function HeaderClient({ categories, brands, breadcrumbs }) {
     <header className="bg-[#1c252e] text-white border-b-[3px_solid_#8d8053] shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center p-2">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <img
-            src="/images/logo2.png"
-            alt="Lakshmi Iron Company Logo"
-            className="h-10 w-auto"
-          />
-        </Link>
-
+          <div className="flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-2">
+              <img
+                src="/images/logo2.png"
+                alt="Lakshmi Iron Company Logo"
+                className="h-10 w-auto"
+              />
+            </Link>
+            <span className="text-sm text-gray-300">GST: 04AFJPM4043F1ZR</span>
+          </div>
         {/* Hamburger (mobile only) */}
         <div className="md:hidden">
           <input id="menu-toggle" type="checkbox" className="hidden peer" />

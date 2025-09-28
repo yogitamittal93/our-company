@@ -32,6 +32,8 @@ export default async function ProductPage({ params }) {
       brand,
       ISI,
       brand_id,
+      price,
+      details,
       categories ( id, name, url ),
       brands ( id, name, url )
     `)
@@ -56,22 +58,31 @@ export default async function ProductPage({ params }) {
   const imageUrl = product.image ? product.image.split(",")[0].trim() : `/images/${product.id}.webp`;
 
   const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    description: product.description,
-    image: imageUrl,
-    sku: product.id,
-    brand: { "@type": "Brand", name: product.brand },
-    category: product.categories?.name || "Products",
-    offers: product.price && {
-      "@type": "Offer",
-      url: `https://lakshmiironcompany.in/products/${product.url}`,
-      price: product.price,
-      priceCurrency: product.currency || "INR",
-      availability: "https://schema.org/InStock",
-    },
-  };
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.name,
+  description: product.description,
+  image: imageUrl,
+  sku: product.id,
+  brand: { "@type": "Brand", name: product.brand },
+  category: product.categories?.name || "Products",
+  offers: product.price && {
+    "@type": "Offer",
+    url: `https://lakshmiironcompany.in/products/${product.url}`,
+    price: product.price,
+    priceCurrency: product.currency || "INR",
+    availability: "https://schema.org/InStock",
+  },
+  // 👇 Add JSON column values as structured product attributes
+  ...(product.details && {
+    additionalProperty: Object.entries(product.details).map(([key, value]) => ({
+      "@type": "PropertyValue",
+      name: key,
+      value: value,
+    })),
+  }),
+};
+
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
