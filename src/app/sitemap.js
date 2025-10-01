@@ -12,7 +12,7 @@ export default async function sitemap() {
   const { data: categories } = await supabase.from("categories").select("url");
 
   // Fetch products
-  const { data: products } = await supabase.from("products").select("id");
+  const { data: products } = await supabase.from("products").select("url");
 
   const safeDate = (date) => {
     const now = new Date();
@@ -37,7 +37,7 @@ export default async function sitemap() {
   if (products) {
     routes = routes.concat(
       products.map((p) => ({
-        url: `${baseUrl}/product/${p.id}`,
+        url: `${baseUrl}/products/${p.url}`,
         lastModified: safeDate(p.updated_at),
       }))
     );

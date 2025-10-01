@@ -60,6 +60,7 @@ export default function HeaderClient({ categories, brands, breadcrumbs }) {
               </label>
             </div>
 
+            <div className="max-h-[calc(100vh-4rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800">
             <nav className="flex flex-col p-4 space-y-2">
               <Link href="/" className={navLinkClass("/")}>Home</Link>
 
@@ -104,6 +105,7 @@ export default function HeaderClient({ categories, brands, breadcrumbs }) {
                 Contact
               </Link>
             </nav>
+            </div>
           </div>
         </div>
 
