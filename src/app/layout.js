@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 
 export const metadata = {
   title: "Lakshmi Iron Company",
+  applicationName: "Lakshmi Iron Company",
   description: "Iron & Steel Sheets Supplier in Chandigarh",
   icons: {
     icon: "/favicon.ico",

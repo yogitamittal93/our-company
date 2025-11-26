@@ -135,7 +135,10 @@ export default async function HomePage() {
                   height={554}
                   className="w-full h-auto"
                   priority
-                  fetchPriority="high" // ✅ Ensures fast LCP
+                  fetchPriority="high"
+                  sizes="(max-width: 640px) 100vw,
+                        (max-width: 1024px) 100vw,
+                        1024px"
                 />
               </a>
             </div>
