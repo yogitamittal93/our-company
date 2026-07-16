@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Lakshmi Iron Company — B2B Product Catalog Platform
 
-## Getting Started
+A B2B e-commerce platform built for **Lakshmi Iron Company**, one of the oldest and largest iron traders in Chandigarh, operating 5 physical shops. The project moved their category-wise, brand-wise product catalog online on a limited budget, giving customers a way to browse and search their inventory without a full-scale e-commerce rebuild.
 
-First, run the development server:
+Solo project — architecture, backend, and schema design.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The problem
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Lakshmi Iron Company needed an online presence to match how their business actually runs: a large, well-defined catalog organized by category and brand, built and delivered within a tight budget — not a generic storefront template.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## What was built
 
-## Learn More
+- **Relational schema design** for a multi-category, multi-brand product catalog, modeling the real structure of their inventory (categories → sub-categories → brands → products) rather than forcing it into a flat product list.
+- **Dynamic filtering logic** letting customers narrow products by category, brand, and other attributes without slow, full-table queries.
+- **SSR-based search indexing** using Next.js server-side rendering so product pages are both fast to load and indexable by search engines — important for a business relying on organic discovery rather than paid ads.
 
-To learn more about Next.js, take a look at the following resources:
+## Tech stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend:** Next.js (SSR for catalog/search pages)
+- **Backend/Data:** Supabase (Postgres) — relational schema, filtering queries
+- **Deployment:** Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Status
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Delivered and live for Lakshmi Iron Company. Built as an independent consulting engagement, from schema design through deployment.
